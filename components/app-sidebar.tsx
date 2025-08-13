@@ -32,7 +32,8 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { TradeMatrixIcon, TradeMatrixLogo } from "./tradematrix";
+import { TradeMatrixIcon } from "./tradematrix";
+import { useSession } from "next-auth/react";
 
 const data = {
   user: {
@@ -152,6 +153,8 @@ const data = {
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const { data: Session } = useSession();
+  console.log(Session);
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
@@ -161,10 +164,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               asChild
               className="data-[slot=sidebar-menu-button]:!p-1.5"
             >
-              <a href="#">
+              <div>
                 <TradeMatrixIcon size={200} />
                 <span className="text-base font-semibold">Trade Matrix</span>
-              </a>
+              </div>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
@@ -175,7 +178,17 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser
+          user={
+            Session?.user
+              ? {
+                  name: Session.user.name ?? undefined,
+                  email: Session.user.email ?? undefined,
+                  image: Session.user.image ?? undefined,
+                }
+              : undefined
+          }
+        />
       </SidebarFooter>
     </Sidebar>
   );
