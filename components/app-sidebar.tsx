@@ -162,10 +162,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenuItem>
             <SidebarMenuButton
               asChild
-              className="data-[slot=sidebar-menu-button]:!p-1.5"
+              className="!h-14 !p-3 [&>svg]:!size-12 group-data-[collapsible=icon]:!size-14"
             >
               <div>
-                <TradeMatrixIcon size={200} />
+                <TradeMatrixIcon />
                 <span className="text-base font-semibold">Trade Matrix</span>
               </div>
             </SidebarMenuButton>
